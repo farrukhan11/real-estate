@@ -28,6 +28,7 @@ app.use(cookieParser());
 app.use("/api/post", userRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/test", testRoute);
+
 connectDB()
   .then(() => {
     console.log("Connected to database");
