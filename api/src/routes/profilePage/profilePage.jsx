@@ -5,6 +5,7 @@ import apiRequest from "../../lib/apiRequest";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { useContext, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 function ProfilePage() {
   const { updateUser, currentUser } = useContext(AuthContext);
@@ -29,7 +30,9 @@ function ProfilePage() {
         <div className="wrapper">
           <div className="title">
             <h1>User Information</h1>
-            <button>Update Profile</button>
+            <Link to="/profile/update">
+              <button>Update Profile</button>
+            </Link>
           </div>
           <div className="info">
             <span>
@@ -42,7 +45,11 @@ function ProfilePage() {
             <span>
               E-mail: <b>{currentUser.user.email}</b>
             </span>
-            <button onClick={handleLogout}>Logout</button>
+            <button onClick={handleLogout}>Logou</button>
+            <Link to="/profile9
+            ">
+              <button>Logouti</button>
+            </Link>
           </div>
           <div className="title">
             <h1>My List</h1>
