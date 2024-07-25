@@ -53,8 +53,11 @@ const login = async (req, res) => {
       }
     );
 
+    // Convert the Mongoose model instance to a plain JavaScript object
+    const userObject = user.toObject();
+
     // Remove password field from user object
-    const { password: userPassword, ...userInfo } = user._doc;
+    const { password: userPassword, ...userInfo } = userObject;
 
     // Send cookies to the user
     const age = 1000 * 60 * 60 * 24 * 7; // 7 days

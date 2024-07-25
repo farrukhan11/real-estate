@@ -6,7 +6,8 @@ import { AuthContext } from "../../context/AuthContext";
 function Navbar() {
   const [open, setOpen] = useState(false);
   const { currentUser } = useContext(AuthContext);
-  const user = true;
+  const user = true;  
+  const avatarSrc = currentUser?.avatar || "/noavatar.png";
   return (
     <nav>
       <div className="left">
@@ -22,7 +23,7 @@ function Navbar() {
       <div className="right">
         {currentUser ? (
           <div className="user">
-            <img src={currentUser.user.avatar || "/noavatar.png"} alt="" />
+            <img src={avatarSrc} alt="" />
             <span>{currentUser.user.username}</span>
             <Link to="/profile" className="profile">
               <div className="notification">3</div>

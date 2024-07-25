@@ -13,6 +13,6 @@ const router = Router();
 router.get("/", getUsers);
 router.get("/:id", verifyToken, getUser);
 router.put("/:id", verifyToken, updateUser);
-router.delete("/", verifyToken, deleteUser);
+router.delete("/:id", verifyToken, deleteUser);
 
 export default router;
