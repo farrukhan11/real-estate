@@ -6,8 +6,9 @@ import { useNavigate } from "react-router-dom";
 import UploadWidget from "../../components/uploadWidget/UploadWidget.jsx";
 
 function ProfileUpdatePage() {
-  const [error, setError] = useState("");
   const { currentUser, updateUser } = useContext(AuthContext);
+  const [error, setError] = useState("");
+  const [avatar, setAvatar] = useState(currentUser.user.avatar);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -19,6 +20,7 @@ function ProfileUpdatePage() {
         username,
         email,
         password,
+        avatar,
       });
       updateUser(res.data);
       navigate("/profile");
@@ -27,7 +29,7 @@ function ProfileUpdatePage() {
     }
   };
 
-  const avatarSrc = currentUser?.avatar || "/noavatar.png";
+  const avatarSrc = avatar || "/noavatar.png";
 
   return (
     <div className="profileUpdatePage">
@@ -62,30 +64,33 @@ function ProfileUpdatePage() {
       </div>
       <div className="sideContainer">
         <img src={avatarSrc} alt="User Avatar" className="avatar" />
-      <UploadWidget uwConfig={{
-        cloudName: "itskode",
-        uploadPreset: "real-estate",
-        sources: ["local", "camera", "url"],
-        showAdvancedOptions: false,
-        cropping: false,
-        multiple: false,
-        defaultSource: "local",
-        maxFileSize: 10000000,
-        folder: "avatars",
-        tags: ["avatar"],
-        resourceType: "image",
-        clientAllowedFormats: ["png", "jpg", "jpeg"],
-        maxImageFileSize: 10000000,
-        maxVideoFileSize: 10000000,
-        maxImageWidth: 1000,
-        maxImageHeight: 1000,
-        croppingAspectRatio: 1,
-        croppingShape: "square",
-        croppingGravity: "faces",
-        croppingDefaultZoom: 1,
-        croppingMinZoom: 0.5,
-        croppingMaxZoom: 2,
-      }} />
+        <UploadWidget
+          uwConfig={{
+            cloudName: "itskode",
+            uploadPreset: "real-estate",
+            sources: ["local", "camera", "url"],
+            showAdvancedOptions: false,
+            cropping: false,
+            multiple: false,
+            defaultSource: "local",
+            maxFileSize: 10000000,
+            folder: "avatars",
+            tags: ["avatar"],
+            resourceType: "image",
+            clientAllowedFormats: ["png", "jpg", "jpeg"],
+            maxImageFileSize: 10000000,
+            maxVideoFileSize: 10000000,
+            maxImageWidth: 1000,
+            maxImageHeight: 1000,
+            croppingAspectRatio: 1,
+            croppingShape: "square",
+            croppingGravity: "faces",
+            croppingDefaultZoom: 1,
+            croppingMinZoom: 0.5,
+            croppingMaxZoom: 2,
+          }}
+          setAvatar={setAvatar}
+        />
       </div>
     </div>
   );

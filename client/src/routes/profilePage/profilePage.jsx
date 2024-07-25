@@ -35,7 +35,7 @@ function ProfilePage() {
           <div className="info">
             <span>
               Avatar:
-              <img src={currentUser.avatar || "/noavatar.png"} alt="" />
+              <img src={currentUser.user.avatar || "/noavatar.png"} alt="" />
             </span>
             <span>
               Username: <b>{currentUser.user.username}</b>
@@ -64,5 +64,6 @@ function ProfilePage() {
     </div>
   );
 }
+
 
 export default ProfilePage;
