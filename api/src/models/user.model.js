@@ -23,6 +23,12 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: null,
     },
+    posts: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Post",
+      },
+    ],
   },
   { timestamps: true }
 );
