@@ -17,9 +17,7 @@ function NewPostPage() {
     e.preventDefault();
     const formData = new FormData(e.target);
     const inputs = Object.fromEntries(formData);
-
     console.log(inputs);
-
     try {
       const res = await apiRequest.post("/posts", {
         postData: {
@@ -35,7 +33,7 @@ function NewPostPage() {
           longitude: inputs.longitude,
           images: images,
         },
-        postDetail: {
+        postDetails: {
           desc: value,
           utilities: inputs.utilities,
           pet: inputs.pet,
@@ -46,10 +44,16 @@ function NewPostPage() {
           restaurant: parseInt(inputs.restaurant),
         },
       });
-      navigate("/" + res.data.id);
+
+      console.log("Response Data:", res.data); // Log the response data
+      if (res.data && res.data.data && res.data.data._id) {
+        navigate("/" + res.data.data._id); // Accessing the _id from data
+      } else {
+        setError("Failed to retrieve post ID");
+      }
     } catch (err) {
-      console.log(err);
-      setError(error);
+      console.error("Submission error:", err);
+      setError("An error occurred while creating the post. Please try again.");
     }
   };
 
@@ -95,18 +99,16 @@ function NewPostPage() {
               <label htmlFor="longitude">Longitude</label>
               <input id="longitude" name="longitude" type="text" />
             </div>
-            <div className="item">
+            {/* <div className="item">
               <label htmlFor="type">Type</label>
-              <select name="type">
-                <option value="rent" defaultChecked>
-                  Rent
-                </option>
+              <select name="type" id="type">
+                <option value="rent">Rent</option>
                 <option value="buy">Buy</option>
               </select>
-            </div>
+            </div> */}
             <div className="item">
-              <label htmlFor="type">Property</label>
-              <select name="property">
+              <label htmlFor="property">Property</label>
+              <select name="property" id="property">
                 <option value="apartment">Apartment</option>
                 <option value="house">House</option>
                 <option value="condo">Condo</option>
@@ -165,28 +167,10 @@ function NewPostPage() {
         ))}
         <UploadWidget
           uwConfig={{
-            cloudName: "itskode",
-            uploadPreset: "real-estate",
-            sources: ["local"],
-            showAdvancedOptions: false,
-            cropping: false,
-            multiple: false,
-            defaultSource: "local",
-            maxFileSize: 10000000,
-            folder: "avatars",
-            tags: ["avatar"],
-            resourceType: "image",
-            clientAllowedFormats: ["png", "jpg", "jpeg"],
-            maxImageFileSize: 10000000,
-            maxVideoFileSize: 10000000,
-            maxImageWidth: 1000,
-            maxImageHeight: 1000,
-            croppingAspectRatio: 1,
-            croppingShape: "square",
-            croppingGravity: "faces",
-            croppingDefaultZoom: 1,
-            croppingMinZoom: 0.5,
-            croppingMaxZoom: 2,
+            multiple: true,
+            cloudName: "lamadev",
+            uploadPreset: "estate",
+            folder: "posts",
           }}
           setState={setImages}
         />

@@ -1,11 +1,28 @@
 import Post from "../models/post.model.js";
 
 const getPosts = async (req, res) => {
+  const query = req.query;
+  console.log(query);
+
+  // Build query filter object conditionally
+  const filter = {};
+
+  if (query.city) filter.city = query.city;
+  if (query.type) filter.type = query.type;
+  if (query.property) filter.property = query.property;
+  if (query.bedroom) filter.bedroom = parseInt(query.bedroom);
+  if (query.minPrice || query.maxPrice) {
+    filter.price = {};
+    if (query.minPrice) filter.price.$gte = parseInt(query.minPrice);
+    if (query.maxPrice) filter.price.$lte = parseInt(query.maxPrice);
+  }
+
   try {
     // Fetch real estate posts from the database
-    const realEstatePosts = await Post.find({});
-
-    if (!realEstatePosts) {
+    const realEstatePosts = await Post.find(filter);
+    console.log(realEstatePosts);
+    if (realEstatePosts.length === 0) {
+      console.log("No real estate posts found"); // Corrected the console log
       return res.status(404).json({
         message: "No real estate posts found",
       });
@@ -49,6 +66,7 @@ const getPost = async (req, res) => {
 };
 
 const addPost = async (req, res) => {
+  console.log("req recived");
   const body = req.body;
   const tokenUserID = req.userID;
 
@@ -57,7 +75,7 @@ const addPost = async (req, res) => {
       ...body.postData,
       user: tokenUserID,
       postDetails: {
-        createdBy: body.postDetails
+        createdBy: body.postDetails,
       },
     });
 

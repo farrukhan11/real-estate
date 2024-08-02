@@ -11,9 +11,14 @@ const postSchema = new mongoose.Schema(
       required: true,
     },
     images: {
-      type: String,
+      type: [String],
       required: true,
     },
+    // type: {
+    //   type: String,
+    //   enum: ["rent", "buy"], // Transaction types
+    //   required: false,
+    // },
     address: {
       type: String,
       required: true,
@@ -38,15 +43,10 @@ const postSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    type: {
+    property: {
       type: String,
-      enum: ["apartment", "house", "land"],
+      enum: ["apartment", "house", "land", "condo"],
       required: true,
-    },
-    status: {
-      type: String,
-      enum: ["available", "sold"],
-      default: "available",
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,
