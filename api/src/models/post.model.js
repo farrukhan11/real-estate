@@ -6,15 +6,11 @@ const postSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    content: {
-      type: String,
-      required: true,
-    },
     price: {
       type: Number,
       required: true,
     },
-    img: {
+    images: {
       type: String,
       required: true,
     },
