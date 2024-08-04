@@ -7,8 +7,7 @@ import { useLoaderData } from "react-router-dom";
 
 function ListPage() {
   const posts = useLoaderData();
-  console.log(posts);
-
+  console.log(posts)
   return (
     <div className="listPage">
       <div className="listContainer">

@@ -1,28 +1,40 @@
 import Post from "../models/post.model.js";
 
 const getPosts = async (req, res) => {
+  console.log("Received Request:", req.url);
   const query = req.query;
-  console.log(query);
-
-  // Build query filter object conditionally
-  const filter = {};
-
-  if (query.city) filter.city = query.city;
-  if (query.type) filter.type = query.type;
-  if (query.property) filter.property = query.property;
-  if (query.bedroom) filter.bedroom = parseInt(query.bedroom);
-  if (query.minPrice || query.maxPrice) {
-    filter.price = {};
-    if (query.minPrice) filter.price.$gte = parseInt(query.minPrice);
-    if (query.maxPrice) filter.price.$lte = parseInt(query.maxPrice);
-  }
+  console.log("Received Query:", query);
 
   try {
-    // Fetch real estate posts from the database
-    const realEstatePosts = await Post.find(filter);
-    console.log(realEstatePosts);
+    let realEstatePosts;
+
+    // Function to check if a query parameter is valid
+    const isValidParam = (param) => param !== undefined && param !== "";
+
+    // Initialize the filter object
+    const filter = {};
+
+    // Conditionally add filters based on query parameters
+    if (isValidParam(query.city)) filter.city = query.city.toLowerCase(); // Ensure case-insensitivity
+    if (isValidParam(query.type)) filter.type = query.type;
+    if (isValidParam(query.propertyType))
+      filter.propertyType = query.propertyType;
+    if (isValidParam(query.bedroom)) filter.bedroom = parseInt(query.bedroom);
+    if (isValidParam(query.minPrice) || isValidParam(query.maxPrice)) {
+      filter.price = {};
+      if (isValidParam(query.minPrice))
+        filter.price.$gte = parseInt(query.minPrice);
+      if (isValidParam(query.maxPrice))
+        filter.price.$lte = parseInt(query.maxPrice);
+    }
+
+    // Fetch real estate posts from the database based on the filter
+    realEstatePosts = await Post.find(filter);
+    console.log("filter is:" + filter);
+
+    console.log("Real Estate Posts:", realEstatePosts);
+
     if (realEstatePosts.length === 0) {
-      console.log("No real estate posts found"); // Corrected the console log
       return res.status(404).json({
         message: "No real estate posts found",
       });
@@ -146,4 +158,18 @@ const deletePost = async (req, res) => {
   }
 };
 
-export { getPosts, getPost, addPost, updatePost, deletePost };
+const deleteAllPosts = async (req, res) => {
+  try {
+    await Post.deleteMany({});
+    res.status(200).json({
+      message: "All real estate posts deleted successfully",
+    });
+  } catch (error) {
+    console.error("Error deleting all real estate posts:", error);
+    res.status(500).json({
+      message: "Error deleting all real estate posts",
+      error: error.message,
+    });
+  }
+};
+export { getPosts, getPost, addPost, updatePost, deletePost, deleteAllPosts };

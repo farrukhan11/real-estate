@@ -9,7 +9,7 @@ function SearchBar() {
     type: "buy",
     city: "", // Changed from location to city
     minPrice: 0,
-    maxPrice: 0,
+    maxPrice: 5000000000000,
   });
 
   const switchType = (val) => {
@@ -58,8 +58,8 @@ function SearchBar() {
           onChange={handleChange}
         />
         <Link
-          to={`/list?type=${query.type}&city=${query.city}&minPrice=${query.minPrice}&maxPrice=${query.maxPrice}`} // Corrected query parameters
-        >
+          to={`/list?type=${query.type}&city=${query.city}&minPrice=${query.minPrice}&maxPrice=${query.maxPrice}`}
+          >
           <button type="button">
             <img src="/search.png" alt="Search" />
           </button>

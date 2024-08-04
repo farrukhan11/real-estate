@@ -17,13 +17,13 @@ import postRoute from "./routes/post.route.js";
 
 //allowing json to be sent in the body of the request
 app.use(express.json());
-
 app.use(
   cors({
     origin: process.env.CLIENT_SIDE_URL,
     credentials: true,
   })
 );
+app.use(express.urlencoded({ extended: true, limit: '16kb' }))
 app.use(cookieParser());
 
 app.use("/api/users", userRoute);

@@ -6,11 +6,15 @@ const singlePageLoader = async ({ request, params }) => {
 };
 
 const listPageLoader = async ({ request, params }) => {
-  console.log(request);
   const query = request.url.split("?")[1];
-  const res = await apiRequest.get(`/posts?${query}`);
-  console.log("Response data:", res.data); // Check the data received from API
-  return res.data; // Return the fetched data
+  console.log(query)
+  try {
+    const res = await apiRequest.get(`/posts?${query}`);
+    return res.data;
+  } catch (error) {
+    console.error("Error fetching posts:", error.message);
+    throw error; // Ensure any errors are propagated
+  }
 };
 
 export { singlePageLoader, listPageLoader };

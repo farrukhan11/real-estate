@@ -99,13 +99,13 @@ function NewPostPage() {
               <label htmlFor="longitude">Longitude</label>
               <input id="longitude" name="longitude" type="text" />
             </div>
-            {/* <div className="item">
+            <div className="item">
               <label htmlFor="type">Type</label>
               <select name="type" id="type">
                 <option value="rent">Rent</option>
                 <option value="buy">Buy</option>
               </select>
-            </div> */}
+            </div>
             <div className="item">
               <label htmlFor="property">Property</label>
               <select name="property" id="property">
